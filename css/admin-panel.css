@@ -96,7 +96,8 @@ svg{
     margin-left: 5px;
 
 }
-.madeby{
+.madeby
+{
     padding-left: 20px;
     margin-top: 5px;
     color: white;
@@ -122,4 +123,12 @@ svg{
     .header{
         height: 60px;
     }
+}
+.center{
+    text-align: center;    
+}
+.logout{
+    padding: 10px 30px;
+    font-size: 18px;
+    font-weight: 600;
 }

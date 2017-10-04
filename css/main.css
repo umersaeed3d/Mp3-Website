@@ -205,3 +205,12 @@ svg{
         width: 25px;
     }    
 }
+.new-tag{
+    color: white;
+    background-color: #D9534F;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 6px;
+    margin-left: 10px;
+    border-radius: 5px;
+}

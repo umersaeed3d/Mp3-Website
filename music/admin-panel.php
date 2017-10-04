@@ -1,3 +1,9 @@
+<?php
+    include('config.php');
+   include('session.php');
+
+   $file = "";
+?>
 <! DOCTYPE html>
 
 <html>
@@ -50,7 +56,10 @@
                     
                     
                     <div id="accordion">
-                        
+                    <div style="display: inline;">
+                     <h2>Welcome <?php echo $login_session; ?></h2>
+                     <a href="logout.php" style="text-align: right;" ><button class="btn btn-danger">Log Out</button></a>
+                    </div>    
                         <h1 class="margin-top">Upload Files</h1>
                         <h5 class="margin-bottom">Upload music files here.</h5>
                         
@@ -111,27 +120,35 @@
                                     <button type="submit" class="btn btn-primary upload-btn">Upload</button>
                                 </form>
                             </div>
-                        </div>
-                        
+ 
                         <div class="header"><h4>Upload Latest Bollywood Singles</h4></div>
                         <div class="border-wrapper">
                             <div>
                                 <ul>
+                                <form method="POST" enctype="multipart/form-data">
                                     <li><label class="form-control-label">Enter Song &amp; Artist Name</label>
-                                    <form>
-                                        <input type="text" class="form-control" placeholder="Song name - Artist name">
-                                    </form></li>
+                                        <input type="text" class="form-control" placeholder="Song name - Artist name" name="name_artist">
+                                    </li>
+                                    <li><label class="form-control-label">Enter Song Name Only</label>
+                                        <input type="text" class="form-control" placeholder="Song name Only" name="single_name">
+                                    </li>
+                                    <li><label class="form-control-label">Enter Artist Name Only</label>
+                                        <input type="text" class="form-control" placeholder="Artist name Only" name="single_artist">
+                                    </li>
+                                    <li><label class="form-control-label">Release Date</label>
+                                        <input type="text" class="form-control" placeholder="i.e. 2017" name="release_date">
+                                    </li>
                                     <li><label class="form-control-label">Upload Song Picture</label>
-                                    <form>
-                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                                    </form></li>
+                                    
+                                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="single_pic"><span style="color: red"><?php echo $file; ?></span>
+                                    </li>
                                     <li><label class="form-control-label">Upload Song</label>
-                                    <form>
-                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                                    </form></li>
+                                
+                                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="single_song">
+                                    </li>
                                 </ul>
-                                <form>
-                                    <button type="submit" class="btn btn-primary upload-btn">Upload</button>
+                                
+                                    <button type="submit" class="btn btn-primary upload-btn" name="upload_single">Upload</button>
                                 </form>
                             </div>
                         </div>
@@ -242,3 +259,48 @@
         </script>
     </body>
 </html>
+
+                        </div>
+<?php
+    
+   $uploadOk = 1;
+
+        
+if (isset($_POST['upload_single'])) {
+
+     
+    $nameartist = mysqli_real_escape_string($db,strip_tags($_POST['name_artist']));
+    $singlename =  mysqli_real_escape_string($db,strip_tags($_POST['single_name']));
+    $singleartist =  mysqli_real_escape_string($db,strip_tags($_POST['single_artist']));
+    $releasedate =  mysqli_real_escape_string($db,strip_tags($_POST['release_date']));
+    $singlepicname = $_FILES['single_pic']['name'];
+    $singlepictmpname = $_FILES['single_pic']['tmp_name'];
+    $targetsinglefile = "images/{$singlepicname}";
+    $imageFileType = pathinfo($targetsinglefile,PATHINFO_EXTENSION);
+
+             if (file_exists($target_file)) {
+    $file =   "Sorry, file already exists.";
+    $uploadOk = 0;
+             }
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" ) {
+    $file =  "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    $uploadOk = 0;
+         }
+        if ($uploadOk == 0) {
+    $file =  "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+        } else {
+    $single_query = "INSERT INTO latest-single(name_artist, single_name, single_artist, release_date, single_pic) VALUES ('$nameartist' , '$singlename' , '$singleartist' , ' $releasedate' , '$singlepicname' ,  )";
+    
+
+    if ($single_query) {
+         move_uploaded_file($singlepictmpname, $target_file);
+        $file =  "The image has been uploaded.";
+    } else {
+        $file = "Sorry, there was an error uploading your file.";
+            }
+                }   
+}  
+       
+?>                       

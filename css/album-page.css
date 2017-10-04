@@ -203,9 +203,7 @@ svg{
 .img-wrapper{
     margin-bottom: 20px;
 }
-audio{
-    width: 100%;
-}
+
 .album-img{
     height: 35%;
     width: 100%
@@ -218,4 +216,41 @@ audio{
     padding-left: 25px;
     font-size: 14px;
     font-style: italic;
+}
+.dl-link{
+    padding-left: 25px;
+    font-size: 14px;
+    line-height: 0.01;
+}
+.mejs__container{
+    width: 300px !important;
+    margin: 0px !important;
+    float: right;
+}
+.mejs__play{
+    background-image: url(../images/play-button.png) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.mejs__pause{
+    background-image: url(../images/pause-button.png) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.mejs__unmute{
+    background-image: url(../images/volume-off-indicator.png) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.mejs__mute{
+    background-image: url(../images/volume-up-interface-symbol.png) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.mejs__container{
+    height: 30px !important;
+    background-color: #528F8B !important;
+}
+.mejs__controls{
+    padding-top: 5px !important;
 }
